@@ -1,0 +1,16 @@
+runtime: nodejs12
+
+health_check:
+  enable_health_check: False
+
+env_variables:
+#  PORT: 8080
+  NODE_ENV: 'local'
+  DB_HOST: '/cloudsql/floam-dev:us-central1:floam-dev-db'
+#  DB_HOST: '/cloudsql/floam-268506:us-central1:floam/.s.PGSQL.5432'
+  DB_PORT: 5432
+  DB_USERNAME: 'postgres'
+  DB_PASSWORD: '39oDxc8JvlwEuaNH'
+  DB_NAME: 'floam-dev-db'
+  ACCESS_KEY_ID: 'AKIAZFZEO7BEHWKLD7GP'
+  SECRET_ACCESS_KEY: '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'

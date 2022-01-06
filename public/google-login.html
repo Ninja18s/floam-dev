@@ -1,0 +1,79 @@
+<html itemscope itemtype="http://schema.org/Article">
+
+<head>
+
+    <title>Floam Google Login</title>
+
+</head>
+
+<body>
+    <script>
+
+        var redirect_uri;
+
+        async function revokeAccess(accessToken, data) {
+            var revokeTokenEndpoint = 'https://oauth2.googleapis.com/revoke?';
+
+            Object.keys(data).forEach(key => {
+                revokeTokenEndpoint += `${key}=${data[key]}&`;
+            })
+            // Create <form> element to use to POST data to the OAuth 2.0 endpoint.
+            var form = document.createElement('form');
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', revokeTokenEndpoint);
+
+            // Add access token to the form so it is set as value of 'token' parameter.
+            // This corresponds to the sample curl request, where the URL is:
+            //      https://oauth2.googleapis.com/revoke?token={token}
+            var tokenField = document.createElement('input');
+            tokenField.setAttribute('type', 'hidden');
+            tokenField.setAttribute('name', 'token');
+            tokenField.setAttribute('value', accessToken);
+            form.appendChild(tokenField);
+
+            // Add form to page and submit it to actually revoke the token.
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        async function getUserData(code) {
+            try {
+                const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&&access_token=${code}`);
+                const data = await res.json();
+                revokeAccess(code, data);
+                // console.log(data);
+                return data;
+            } catch (error) {
+                return null;
+                // console.log(error);
+            }
+        }
+
+        const onLoaded = function () {
+            redirect_uri = `${document.location.origin}${document.location.pathname}`;
+            console.log(redirect_uri)
+            const url = document.location.href?.split('#')[1];
+            let code;
+            if (url) {
+                url.split('&').forEach(queryParams => {
+                    const [key, value] = queryParams.split('=');
+                    if (key === 'access_token' || key === 'code') {
+                        code = value;
+                    }
+                })
+            }
+            if (code) {
+                getUserData(code);
+            } else {
+                const url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=token&redirect_uri=${redirect_uri}&client_id=219519736935-o6rj7to652a4tddmrghpfd17a7s7rtr4.apps.googleusercontent.com&fetch_basic_profile=true&scope=https://www.googleapis.com/auth/userinfo.profile`;
+                setTimeout(function(){
+                    document.location.href = url;
+                    },250);
+            }
+        }
+        window.onload = onLoaded;
+
+    </script>
+</body>
+
+</html>

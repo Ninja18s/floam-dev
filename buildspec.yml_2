@@ -1,0 +1,34 @@
+version: 0.2
+
+eb_codebuild_settings:
+  CodeBuildServiceRole: arn:aws:iam::170419616189:role/aws-elasticbeanstalk-service-role
+  ComputeType: BUILD_GENERAL1_SMALL
+  Image: aws/codebuild/standard:4.0
+  Timeout: 30
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12.x
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+      - echo INSTALL completed on `date`
+  build:
+    commands:
+      - echo BUILD started on `date`
+      - echo `pwd`
+      - echo "Building application..."
+      - npm run build
+  post_build:
+    commands:
+      - echo "build completed...."
+
+artifacts:
+  files:
+    - dist/**/*
+    - package.json
+    - package-lock.json
+    - node_modules/**/*
+    - .ebextensions/**/*
