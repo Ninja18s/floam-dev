@@ -38,7 +38,7 @@ const config: PostgresConnectionOptions = {
   cli: {
     migrationsDir: 'migration',
   },
-  ssl: NODE_ENV !== 'prod',
+  ssl: false,
   subscribers: [
     UserEventSubscriber,
   ],
