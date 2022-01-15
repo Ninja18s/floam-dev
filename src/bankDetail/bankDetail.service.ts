@@ -16,7 +16,7 @@ export class BankDetailService {
      constructor(
           @InjectRepository(BankDetail)
           private readonly BankDetailServiceRepo: Repository<BankDetail>
-     ) {}
+     ) { }
 
      async createEntry(stripeBankToken: BankDetailDto) {
           try {
@@ -28,6 +28,8 @@ export class BankDetailService {
                     userId,
                     bankToken,
                     bankAccountToken,
+                    city,
+                    state
                } = stripeBankToken;
                const bankDetail: BankDetail = {
                     name,
@@ -37,6 +39,8 @@ export class BankDetailService {
                     userId,
                     bankToken,
                     bankAccountToken,
+                    city,
+                    state
                };
                return await this.BankDetailServiceRepo.save(bankDetail);
           } catch (err) {

@@ -139,4 +139,11 @@ export class PayoutController {
                return payouts;
           }
      }
+     @Post('/allPayouts')
+     async getAllPayoutsByFilter(@Body() status: string) {
+
+          let payouts = this.payoutService.getAllPayoutsByFilter(status);
+          return payouts;
+
+     }
 }

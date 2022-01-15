@@ -19,7 +19,7 @@ export class BankDetailController {
      constructor(
           private readonly bankDetailService: BankDetailService,
           private userService: UserService
-     ) {}
+     ) { }
 
      @Post()
      async createBankDetail(
