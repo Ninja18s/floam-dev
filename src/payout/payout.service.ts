@@ -16,7 +16,7 @@ export class PayoutService {
      constructor(
           @InjectRepository(Payout)
           private readonly PayoutServiceRepo: Repository<Payout>
-     ) {}
+     ) { }
 
      createPayout(dto: PayoutDto) {
           const {
@@ -63,6 +63,11 @@ export class PayoutService {
 
      async getAllPayouts() {
           return await this.PayoutServiceRepo.find();
+     }
+     async getAllPayoutsByFilter(status: string) {
+          return await this.PayoutServiceRepo.find({
+               where: { status }
+          });
      }
 
      async getPayoutWithDates(startDate, endDate) {

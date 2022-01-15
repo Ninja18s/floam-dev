@@ -16,6 +16,12 @@ export class BankDetail extends BaseEntity {
      @Column()
      accountNumber: string;
 
+     @Column()
+     state: string;
+
+     @Column()
+     city: string;
+
      @Column({ default: null, nullable: true })
      bankToken?: string;
 

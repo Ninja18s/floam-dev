@@ -6,4 +6,6 @@ export class BankDetailDto {
      userId: string;
      bankToken: string
      bankAccountToken: string
+     state: string;
+     city: string;
 }
