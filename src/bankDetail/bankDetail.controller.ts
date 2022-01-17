@@ -61,7 +61,7 @@ export class BankDetailController {
      updateBankDetail(
           @Param('id') id: string,
           @Body() bankDetailDto: BankDetailDto
-     ): Promise<BankDetail> {
+     ): Promise<unknown> {
           this.log.log(`processing update...`);
           return this.bankDetailService.update(id, bankDetailDto);
      }

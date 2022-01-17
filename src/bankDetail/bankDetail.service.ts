@@ -66,11 +66,33 @@ export class BankDetailService {
      }
 
      async update(id: string, bankDetailDto) {
-          let bankDetail = await this.BankDetailServiceRepo.findOne({
-               where: { id: id },
-          });
-          bankDetail = await this.BankDetailServiceRepo.save(bankDetailDto);
-          return bankDetail;
+          const {
+               name,
+               bankName,
+               routingNumber,
+               accountNumber,
+               userId,
+               bankToken,
+               bankAccountToken,
+               city,
+               state
+          } = bankDetailDto
+          let bankDetail = await this.BankDetailServiceRepo.update(
+               { id: id },
+               {
+                    name,
+                    bankName,
+                    routingNumber,
+                    accountNumber,
+                    userId,
+                    bankToken,
+                    bankAccountToken,
+                    city,
+                    state
+               }
+          );
+
+          return bankDetail
      }
 
      async createBankToken(data, user): Promise<BankDetailDto> {
